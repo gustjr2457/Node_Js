@@ -8,7 +8,7 @@
         #main
         {
             height: 800px;
-            width: 1500px;
+            width: 1000px;
         }
         #mainstage
         {
@@ -19,27 +19,68 @@
         }
         #introducemyself
         {
-            height: 90%;
-            width: 300px;
-            background-color: skyblue;
+            height: 600px;
+            width: 350px;
+            background-color: lightslategray;
             display: inline-block;
+            
+            text-align: center;
         }
         #picmain
         {
-
+            height: 600px;
+            width: 650px;
+            background-color: whitesmoke;
+            display: inline-block;
+            position: fixed;
         }
+        #msspan
+        {
+            display: inline-block;
+            height: 35%;
+            width: 90%;
+            background-color: white;
+            text-align: auto;
+        }
+        #ttspan
+        {
+            display: inline-block;
+            height: 40%;
+            width: 90%;
+            background-color: white;
+            text-align: left;
+            font-size: 16px;
+        }
+        #maru
+        {
+            width: 200px;
+            height: auto;
+            margin: 20px;
+            position: relative;
+            display: inline-block;
+        }
+        b{ display: inline-block; position: fixed; margin-top: 20px;}
+
+
     </style>
+    <script>
+        var myself = document.getElementById("myself");
+
+    </script>
 </head>
 <body>
     <div id="main">
         <div id="mainstage">202202034 서현석</div>
         <div id="introducemyself">
-            <div id="myself">자기소개</div>
-            <span></span>
-            <div id="timetable">시간표</div>
-            <span></span>
+            <div id="myself"><h3>자기소개</h3></div>
+            <span id="msspan">안녕하세요 22학번 서현석 학생입니다.</span>
+            <div id="timetable"><h3>시간표</h3></div>
+            <span id="ttspan">월: 9~12 반응형웹 13~16 C#응용<br>화: 공강~<br>수: 9~12 프로그래밍패턴 13~15 중국어<br>목: 10~12 게임데이터분석 13~16 게임엔진<br>금: 공강~</span>
         </div>
-        <div id="picmain"></div>
+        <div id="picmain">
+            <img src="image/매룽.jpg" alt="" id="maru">
+            <b>제가 키우는 고양이 마루입니다</b>
+        </div>
     </div>
     
 </body>
