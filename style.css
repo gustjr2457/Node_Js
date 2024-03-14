@@ -1,0 +1,69 @@
+
+*{margin: 0; padding: 0;}
+.main
+{
+    width: 1600px;
+    height: 900px;
+    background-color: whitesmoke;
+}
+
+#d_Top
+{
+    width: 1600px;
+    height: 100px;
+    background-color: aqua;
+    text-align: right;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+}
+
+#student_id
+{
+    display: inline-block;
+    padding: 10px;
+    color: black;
+    font-size: 30px;
+}
+
+#student_name
+{
+    display: inline-block;
+    padding: 10px;
+    color: black;
+    font-size: 30px;
+}
+
+#d_Left
+{
+    width: 320px;
+    height: 800px;
+    background-color: black;
+    float: left;
+    text-align: center;
+}
+
+#d_Left button
+{
+    padding: 8px; margin: 8px;
+    width: 280px;
+    height: 60px;
+    font-size: 30px;
+}
+
+#d_Right
+{
+    width: 1280px;
+    height: 800px;
+    background-color: blueviolet;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#emptypage
+{
+    font-size: 100px;
+    
+}
