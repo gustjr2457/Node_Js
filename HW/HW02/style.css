@@ -11,7 +11,7 @@
 {
     width: 1600px;
     height: 100px;
-    background-color: aqua;
+    background-color: lightblue;
     text-align: right;
     display: flex;
     justify-content: right;
@@ -38,7 +38,7 @@
 {
     width: 320px;
     height: 800px;
-    background-color: black;
+    background-color: lightgreen;
     float: left;
     text-align: center;
 }
@@ -55,7 +55,7 @@
 {
     width: 1280px;
     height: 800px;
-    background-color: blueviolet;
+    background-color: lightslategray;
     float: right;
     display: flex;
     justify-content: center;

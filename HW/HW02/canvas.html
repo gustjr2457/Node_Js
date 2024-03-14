@@ -18,8 +18,21 @@
             <button type="button" onclick="location.href='pic.html'">버튼 2</button>
         </div>
         <div id="d_Right">
+            <canvas id="myCanvas" style="background-color: aliceblue;" width="1200" height="700">
+                이 브라우저는 canvas를 지원하지 않습니다.
+            </canvas>
             
         </div>
-    </div>    
+    </div>
+    <script>
+        let canvas = document.getElementById('myCanvas');
+        let ctx = canvas.getContext("2d");
+        
+        ctx.fillStyle = "rgba(150, 25, 255, 0.75)";
+        ctx.beginPath();
+        ctx.arc(600,350,200,0,Math.PI*2);
+        ctx.fill();
+        ctx.stroke();
+    </script>    
 </body>
 </html>
