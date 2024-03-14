@@ -7,6 +7,11 @@
     background-color: whitesmoke;
 }
 
+#emptypage
+{
+    font-size: 100px;    
+}
+
 #d_Top
 {
     width: 1600px;
@@ -62,8 +67,23 @@
     align-items: center;
 }
 
-#emptypage
+#d_Righ
 {
-    font-size: 100px;
-    
+    width: 1200px;
+    height: 720px;
+    background-color: lightslategray;
+    float: right;
+    padding: 40px;
+}
+
+#d_Righ img
+{
+    float: left;
+}
+
+#d_Righ ul
+{
+    padding-left: 370px;
+    font-size: 30px;
+    font-style: italic;
 }
