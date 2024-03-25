@@ -6,7 +6,7 @@ function drawNum() {
     var studentID = document.getElementById("studentID").value;
 
     // 폰트 및 스타일 설정
-    ctx.font = "bold 20px 'Digital-7'";
+    ctx.font = "bold 20px 'digital-7'";
     ctx.fillStyle = "black";
 
     // 캔버스에 학번 텍스트 그리기
