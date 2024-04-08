@@ -24,6 +24,7 @@ class HeartObject
         var colorIndex = Math.floor(Math.random()*7);
         ctx.fillStyle = colors[colorIndex];
         ctx.fill();
+        
         ctx.closePath();        
     }
 }
