@@ -33,7 +33,7 @@ function draw()
     ctx.rotate(EarthSelfRotAngle);
     ctx.fillRect(-25,-25,50,50);
     ctx.restore();
-
+    
     MoonRotAngle += Math.PI / 100;
     MoonSelfAngle += Math.PI / 80;
     ctx.save();
