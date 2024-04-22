@@ -1,0 +1,14 @@
+*
+{
+    background-color: rgb(72, 153, 242);   
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+#canvas
+{
+    margin: 50px;
+    width: 480px;
+    height: 800px; 
+    background-color: azure;
+}
