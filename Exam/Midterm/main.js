@@ -146,98 +146,6 @@ function mainScreen()
 }
 
 
-class Enemy
-{
-    constructor(x, y, scale)
-    {
-        this.x = x;
-        this.y = y;
-        this.scale = scale;
-    }
-
-    draw()
-    {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 2, 0, 2 * Math.PI);
-        ctx.fillStyle = 'black';
-        ctx.fill();
-    }
-}
-
-class Vector
-{
-    constructor(x, y)
-    {
-        this.x = x; 
-        this.y = y;
-    }
-}
-
-function enemy(x, y)
-{
-    ctx.beginPath();
-    ctx.arc(x, y, 2, 0, 2 * Math.PI);
-    ctx.fillStyle = 'black';
-
-}
-
-class MouseEffector
-{
-    constructor(x, y, speed, direction)
-    {
-        this.x = x;
-        this.y = y;
-        this.speed = speed;
-        this.particle = new Enemy(this.x ,this.y, this.scale);
-        this.direction = direction;
-    }
-
-    draw()
-    {
-        this.particle.seta = Math.atan2(this.direction.x, this.direction.y);
-        if(this.particle.x > 0)
-        {
-            this.particle.x -= (this.direction.x * this.speed);
-        }
-        if(this.particle.y > 0)
-        {
-            this.particle.y -= (this.direction.y * this.speed);
-        }
-        if(this.particle.x < 0)
-        {
-            this.particle.x -= (this.direction.x * this.speed);
-        }
-        if(this.particle.y < 0)
-        {
-            this.particle.y += (this.direction.y * this.speed);
-        }
-        this.particle.draw();
-    }
-}
-
-class EffectPool
-{
-    constructor()
-    {
-        this.pool = [];
-    }
-
-    push(item)
-    {
-        this.pool.push(item);
-    }
-
-    update()
-    {
-        if(this.pool.length > 100)
-        {
-            this.pool.shift();
-        }
-        this.pool.forEach(element => {
-            element.draw();
-        });
-    }
-}
 
 var a = 0; 
 function buttondraw()
@@ -314,15 +222,14 @@ function buttondraw()
             const Ymax = 800;
             var element = new HeartObject(Math.floor(Math.random() * Xmax - 240) ,Math.floor(Math.random() * Ymax - 400), "red", 2);
             element.draw();
-            var effectpool = new EffectPool();
-            var x = Math.floor(Math.random() * 480) - 240;
-            var y = Math.floor(Math.random() * 800) - 400;
-            effectpool.push(new MouseEffector(x, y, 'black', 2, 1));
-
             a = 1;
+
+            
         },1000);
         }
     }
+
+    
     canvas.onmouseup = (e) =>
     {
         posX = e.offsetX;
