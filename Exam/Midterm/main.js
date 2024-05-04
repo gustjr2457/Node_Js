@@ -1,16 +1,15 @@
 var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 
-const centerX = canvas.width / 2;
-const centerY = canvas.height / 2;
+const WIDTH = canvas.width / 2;
+const HEIGHT = canvas.height / 2;
 
-
-
-ctx.translate(centerX, centerY);
+//ctx.translate(WIDTH, HEIGHT);
 
 function drawStar()
 {
     ctx.beginPath();
+    ctx.translate(WIDTH, HEIGHT);
     ctx.moveTo(0, -30);  
     ctx.lineTo(-20, 30);
     ctx.lineTo(30, -10); 
@@ -20,6 +19,7 @@ function drawStar()
     ctx.fillStyle = 'rgb(255, 201, 14)';
     ctx.stroke();
     ctx.fill();
+    ctx.translate(-WIDTH, -HEIGHT);
 }
 
 
@@ -38,8 +38,10 @@ class HeartObject
 
     draw()
     {
+        ctx.translate(WIDTH, HEIGHT);
         ctx.fillStyle = this.color;
         ctx.beginPath();
+        
         var radius = 5;
         ctx.moveTo(this.x, this.y);
         for(var i = 0; i < Math.PI; i += 0.01)
@@ -117,13 +119,120 @@ class HeartObject
             ctx.lineTo(rx, ry);
         }
         ctx.fill();
+        ctx.translate(-WIDTH, -HEIGHT);
     }
 
 }
 
+class EnemyObject
+{
+    constructor(x, y, scale, color)
+    {
+        this.x = x;
+        this.y = y;
+        this.scale = scale;
+        this.color = color;
+    }
 
+    start()
+    {
+        
+    }
+
+    update()
+    {
+        var directionx = playerPosX - this.x;
+        var directiony = playerPosY - this.y;
+
+        var magnitude = Math.sqrt(directionx * directionx + directiony * directiony);
+
+        directionx /= magnitude;
+        directiony /= magnitude;
+
+        this.x += directionx;
+        this.y += directiony;
+    }
+
+    render()
+    {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        var radius = 1;
+        var fx = 0;
+        var fy = 0;
+
+        
+        fx *= this.scale;
+        fy *= this.scale;
+        
+        fx += WIDTH;
+        fy += HEIGHT;
+        
+        fx += this.x;
+        fy += this.y;
+
+        for(var i = 0; i < Math.PI * 2; i += 0.01)
+        {
+            var rx = radius;
+            var ry = 0;
+            var tempX = rx;
+            var tempY = ry;
+
+            rx = (tempX * Math.cos(i) + tempY * Math.sin(i));
+            ry = (tempX * -Math.sin(i) + tempY * Math.cos(i));
+            
+            rx *= this.scale;
+            ry *= this.scale;
+            
+            rx += WIDTH;
+            ry += HEIGHT;
+
+            rx += this.x;
+            ry += this.y;
+
+
+            ctx.lineTo(rx,  ry);
+        }
+        ctx.closePath();
+        ctx.fill();
+    }
+}
+
+class Vector
+{
+    constructor(x, y)
+    {
+        this.x = x; 
+        this.y = y;
+    }
+}
+
+var playerPosX = 0;
+var playerPosY = 0;
+
+var prevTime = new Date();
+
+var enemyPool = [];
+
+
+var posX = 0;
+var posY = 0;
+
+canvas.onmousemove = (e) =>
+{
+    posX = e.offsetX;
+    posY = e.offsetY;
+}
+
+var prevDate = new Date();
+
+
+
+
+ctx.translate(WIDTH, HEIGHT);
 mainScreen();
 buttondraw();
+ctx.translate(-WIDTH, -HEIGHT);
 function mainScreen()
 {
     ctx.beginPath();
@@ -175,6 +284,7 @@ function buttondraw()
         if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
         {
             ctx.beginPath();
+            ctx.translate(WIDTH, HEIGHT);
             ctx.moveTo(80, 200);
             ctx.lineTo(80, 250);
             ctx.lineTo(-80, 250);
@@ -187,6 +297,7 @@ function buttondraw()
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center';
             ctx.fillText('시작', 0, 230);
+            ctx.translate(-WIDTH, -HEIGHT);
         }
     }
     canvas.onmousedown = (e) =>
@@ -197,6 +308,7 @@ function buttondraw()
         {
             a = 1;
             ctx.beginPath();
+            ctx.translate(WIDTH, HEIGHT);
             ctx.moveTo(80, 200);
             ctx.lineTo(80, 250);
             ctx.lineTo(-80, 250);
@@ -216,12 +328,47 @@ function buttondraw()
             ctx.lineTo(240, -400);
             ctx.lineTo(-240, -400);
             ctx.fillStyle = 'whitegray';
-            ctx.fill();
-            drawStar();
+            ctx.translate(-WIDTH, -HEIGHT);
+            ctx.closePath(); 
+            setInterval(() => {
+                ctx.fillStyle = canvas.style.backgroundColor;
+                ctx.fillRect(0, 0, 480, 800);
+                drawStar();
+                var element = new HeartObject(Math.floor(Math.random() * Xmax - 240) ,Math.floor(Math.random() * Ymax - 400), "red", 2);
+                element.draw();
+                var currentTime = new Date();
+                if(currentTime.getTime() - prevTime.getTime() > 1000)
+                {
+                    for(var i = 0; i < Math.random() * 14 + 1; i++)
+                    {
+                        enemyPool.push(new EnemyObject(-(Math.random() * WIDTH + 200) - 20, Math.random() * HEIGHT * 2 - HEIGHT, 20, 'black')); 
+                    }
+
+                    for(var i = 0; i < Math.random() * 14 + 1; i++)
+                    {
+                        enemyPool.push(new EnemyObject((Math.random() * WIDTH + 200) + 20, Math.random() * HEIGHT * 2 - HEIGHT, 20, 'black')); 
+                    }
+
+                    for(var i = 0; i < Math.random() * 14 + 1; i++)
+                    {
+                        enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH, -(Math.random() * 200)-HEIGHT - 20, 20, 'black')); 
+                    }
+
+                    for(var i = 0; i < Math.random() * 14 + 1; i++)
+                    {
+                        enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH, (Math.random() * 200) +HEIGHT + 20, 20, 'black')); 
+                    }
+                    prevTime = new Date();
+                }
+                enemyPool.forEach((element) =>{
+                    element.update();
+                    element.render();
+                });
+            }, 10);
+            
             const Xmax = 480;
             const Ymax = 800;
-            var element = new HeartObject(Math.floor(Math.random() * Xmax - 240) ,Math.floor(Math.random() * Ymax - 400), "red", 2);
-            element.draw();
+            
             a = 1;
 
             
