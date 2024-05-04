@@ -341,22 +341,22 @@ function buttondraw()
                 {
                     for(var i = 0; i < Math.random() * 14 + 1; i++)
                     {
-                        enemyPool.push(new EnemyObject(-(Math.random() * WIDTH + 200) - 20, Math.random() * HEIGHT * 2 - HEIGHT, 20, 'black')); 
+                        enemyPool.push(new EnemyObject(-(Math.random() * WIDTH + 200) - 20, Math.random() * HEIGHT * 2 - HEIGHT, 10, 'black')); 
                     }
 
                     for(var i = 0; i < Math.random() * 14 + 1; i++)
                     {
-                        enemyPool.push(new EnemyObject((Math.random() * WIDTH + 200) + 20, Math.random() * HEIGHT * 2 - HEIGHT, 20, 'black')); 
+                        enemyPool.push(new EnemyObject((Math.random() * WIDTH + 200) + 20, Math.random() * HEIGHT * 2 - HEIGHT, 10, 'black')); 
                     }
 
                     for(var i = 0; i < Math.random() * 14 + 1; i++)
                     {
-                        enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH, -(Math.random() * 200)-HEIGHT - 20, 20, 'black')); 
+                        enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH, -(Math.random() * 200)-HEIGHT - 20, 10, 'black')); 
                     }
 
                     for(var i = 0; i < Math.random() * 14 + 1; i++)
                     {
-                        enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH, (Math.random() * 200) +HEIGHT + 20, 20, 'black')); 
+                        enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH, (Math.random() * 200) +HEIGHT + 20, 10, 'black')); 
                     }
                     prevTime = new Date();
                 }
@@ -384,6 +384,7 @@ function buttondraw()
         if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
         {
             ctx.beginPath();
+            ctx.translate(WIDTH, HEIGHT);
             ctx.moveTo(80, 200);
             ctx.lineTo(80, 250);
             ctx.lineTo(-80, 250);
@@ -396,6 +397,7 @@ function buttondraw()
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center';
             ctx.fillText('시작', 0, 230);
+            ctx.translate(-WIDTH, -HEIGHT);
         }
     }
     canvas.onmouseout = (e) =>
@@ -405,6 +407,7 @@ function buttondraw()
         if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
         {
             ctx.beginPath();
+            ctx.translate(WIDTH, HEIGHT);
             ctx.moveTo(80, 200);
             ctx.lineTo(80, 250);
             ctx.lineTo(-80, 250);
@@ -417,6 +420,7 @@ function buttondraw()
             ctx.fillStyle = 'white';
             ctx.textAlign = 'center';
             ctx.fillText('시작', 0, 230);
+            ctx.translate(-WIDTH, -HEIGHT);
         }
     }
 }
