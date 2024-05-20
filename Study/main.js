@@ -7,7 +7,7 @@ const HEIGHT = canvas.height / 2;
 
 var enemyPool = [];
 var enemyDeletePool = [];
-var playerHP = 3;
+var playerHP = 300;
 var playerRadius = 20;
 
 
@@ -59,32 +59,15 @@ function keyUpHandler(e) {
 
 function drawStar(rotangle)
 {
-    if(rightPressed)
-        {
-            playerPosX++;
-        }
-    if(leftPressed)
-        {
-            playerPosX--;
-        }
-    if(upPressed)
-        {
-            playerPosY--;
-        }
-    if(downPressed)
-        {
-            playerPosY++;
-        }
-
     ctx.save();
     ctx.beginPath();
     ctx.translate(WIDTH + playerPosX, HEIGHT + playerPosY);
     ctx.rotate(rotangle);
     ctx.moveTo(0, -30);  
-    ctx.lineTo(-20, 30);
+    ctx.lineTo(-20, 30); 
     ctx.lineTo(30, -10); 
     ctx.lineTo(-30, -10);
-    ctx.lineTo(20, 30);
+    ctx.lineTo(20, 30);  
     ctx.lineTo(0, -30);  
     ctx.fillStyle = 'rgb(255, 201, 14)';
     ctx.stroke();
@@ -109,7 +92,23 @@ class HeartObject
         ctx.translate(WIDTH, HEIGHT);
         ctx.fillStyle = this.color;
         ctx.beginPath();
-        
+        if(rightPressed)
+            {
+                this.x -= 3;
+            }
+        if(leftPressed)
+            {
+                this.x += 3;
+            }
+        if(upPressed)
+            {
+                this.y += 3;
+            }
+        if(downPressed)
+            {
+                this.y -= 3;
+            }
+
         var radius = 5;
         ctx.moveTo(this.x, this.y);
         for(var i = 0; i < Math.PI; i += 0.01)
@@ -223,7 +222,22 @@ class EnemyObject
 
         this.x += this.directionx;
         this.y += this.directiony;
-
+        if(rightPressed)
+            {
+                this.x -= 3;
+            }
+        if(leftPressed)
+            {
+                this.x += 3;
+            }
+        if(upPressed)
+            {
+                this.y += 3;
+            }
+        if(downPressed)
+            {
+                this.y -= 3;
+            }
     }
 
     render()
@@ -358,6 +372,206 @@ function overScreen()
     ctx.closePath();
 }
 
+function gameOverBtn()
+{
+    const buttonX = canvas.width/2 + 80;
+    const buttonY = canvas.height/2 + 250;
+    const buttonWidth = 160;
+    const buttonHeight = 50;
+
+    ctx.beginPath();
+    ctx.moveTo(80, 200);
+    ctx.lineTo(80, 250);
+    ctx.lineTo(-80, 250);
+    ctx.lineTo(-80, 200);
+    ctx.lineTo(80, 200);
+    ctx.fillStyle = "rgb(208, 206, 206)";
+    ctx.fill();
+    ctx.stroke();
+    ctx.font = '20px Arial';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText('시작', 0, 230);
+
+    canvas.onmousemove = (e) =>
+    {
+        posX = e.offsetX;
+        posY = e.offsetY;
+        if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
+        {
+            ctx.beginPath();
+            ctx.translate(WIDTH, HEIGHT);
+            ctx.moveTo(80, 200);
+            ctx.lineTo(80, 250);
+            ctx.lineTo(-80, 250);
+            ctx.lineTo(-80, 200);
+            ctx.lineTo(80, 200);
+            ctx.fillStyle = "rgb(248, 203, 178)";
+            ctx.fill();
+            ctx.stroke();
+            ctx.font = '20px Arial';
+            ctx.fillStyle = 'white';
+            ctx.textAlign = 'center';
+            ctx.fillText('시작', 0, 230);
+            ctx.translate(-WIDTH, -HEIGHT);
+        }
+    }
+    canvas.onmousedown = (e) =>
+        {
+            posX = e.offsetX;
+            posY = e.offsetY;
+            if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
+            {
+                a = 1;
+                ctx.beginPath();
+                ctx.translate(WIDTH, HEIGHT);
+                ctx.moveTo(80, 200);
+                ctx.lineTo(80, 250);
+                ctx.lineTo(-80, 250);
+                ctx.lineTo(-80, 200);
+                ctx.lineTo(80, 200);
+                ctx.fillStyle = "rgb(0, 32, 96)";
+                ctx.fill();
+                ctx.stroke();
+                ctx.font = '20px Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText('시작', 0, 230);
+                setTimeout(function () {
+                ctx.beginPath();
+                ctx.moveTo(-240, 400);
+                ctx.lineTo(240, 400);
+                ctx.lineTo(240, -400);
+                ctx.lineTo(-240, -400);
+                ctx.fillStyle = 'whitegray';
+                ctx.translate(-WIDTH, -HEIGHT);
+                ctx.closePath(); 
+                const Xmax = 480;
+                const Ymax = 800;
+                var count = 0;
+                var element = new HeartObject(Math.floor(Math.random() * Xmax - 240) ,Math.floor(Math.random() * Ymax - 400), "red", 2);
+                var rang = 0.03;
+                setInterval(() => {
+                    ctx.fillStyle = canvas.style.backgroundColor;
+                    ctx.fillRect(0 - Math.abs(playerPosX), 0 - Math.abs(playerPosY), 960 + Math.abs(playerPosX), 1600 + Math.abs(playerPosY));
+                    rang += 0.03;
+                    drawStar(rang);
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'black';
+                    ctx.fillText('HP:'+playerHP, 240, 470);
+                    element.draw();
+                    
+                    var currentTime = new Date();
+                    if(currentTime.getTime() - prevTime.getTime() > 1000)
+                        {
+                        for(var i = 0; i < Math.random() * 14 + 1; i++)
+                        {
+                            enemyPool.push(new EnemyObject(-(Math.random() * WIDTH + 200) - 20 + playerPosX, Math.random() * HEIGHT * 2 - HEIGHT + playerPosY, 10, 'black')); // 
+                        }
+    
+                        for(var i = 0; i < Math.random() * 14 + 1; i++)
+                        {
+                            enemyPool.push(new EnemyObject((Math.random() * WIDTH + 200) + 20 + playerPosX, Math.random() * HEIGHT * 2 - HEIGHT + playerPosY, 10, 'black')); 
+                        }
+    
+                        for(var i = 0; i < Math.random() * 14 + 1; i++)
+                        {
+                            enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH + playerPosX, -(Math.random() * 200)-HEIGHT - 20 + playerPosY, 10, 'black')); 
+                        }
+    
+                        for(var i = 0; i < Math.random() * 14 + 1; i++)
+                        {
+                            enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH + playerPosX, (Math.random() * 200) +HEIGHT + 20 + playerPosY, 10, 'black')); 
+                        }
+                        prevTime = new Date();
+                        }
+    
+                    count = 0;
+                    enemyDeletePool = [];
+    
+                    enemyPool.forEach((element) =>{
+                        element.update();
+                        element.render();
+                        });
+    
+                    enemyPool.forEach((element) =>{
+                        count++;
+                        if(element.findtouch() == true)
+                            {
+                                enemyDeletePool.push(count);
+                                playerHP--;
+                            }
+                    });
+    
+                    enemyDeletePool.forEach((element) =>{
+                        enemyPool.splice(element-1, 1);
+                        
+                    })
+    
+                    if(playerHP <= 0)
+                    {
+                        clearInterval();
+                        ctx.translate(WIDTH, HEIGHT);
+                        overScreen();
+                        ctx.translate(-WIDTH, -HEIGHT);
+                    }
+    
+                }, 10);
+    
+                a = 1;
+    
+                },1000);
+            }
+        }
+    
+        
+        canvas.onmouseup = (e) =>
+        {
+            posX = e.offsetX;
+            posY = e.offsetY;
+            if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
+            {
+                ctx.beginPath();
+                ctx.translate(WIDTH, HEIGHT);
+                ctx.moveTo(80, 200);
+                ctx.lineTo(80, 250);
+                ctx.lineTo(-80, 250);
+                ctx.lineTo(-80, 200);
+                ctx.lineTo(80, 200);
+                ctx.fillStyle = "rgb(248, 203, 178)";
+                ctx.fill();
+                ctx.stroke();
+                ctx.font = '20px Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText('시작', 0, 230);
+                ctx.translate(-WIDTH, -HEIGHT);
+            }
+        }
+        canvas.onmouseout = (e) =>
+        {
+            posX = e.offsetX;
+            posY = e.offsetY;
+            if (a != 1 && posX >= (buttonX - buttonWidth) && posX <= buttonX && posY >= (buttonY - buttonHeight) && posY <= buttonY)
+            {
+                ctx.beginPath();
+                ctx.translate(WIDTH, HEIGHT);
+                ctx.moveTo(80, 200);
+                ctx.lineTo(80, 250);
+                ctx.lineTo(-80, 250);
+                ctx.lineTo(-80, 200);
+                ctx.lineTo(80, 200);
+                ctx.fillStyle = "rgb(208, 206, 206)";
+                ctx.fill();
+                ctx.stroke();
+                ctx.font = '20px Arial';
+                ctx.fillStyle = 'white';
+                ctx.textAlign = 'center';
+                ctx.fillText('시작', 0, 230);
+                ctx.translate(-WIDTH, -HEIGHT);
+            }
+        }
+}
 
 var a = 0; 
 function buttondraw()
@@ -440,32 +654,16 @@ function buttondraw()
             var rang = 0.03;
             setInterval(() => {
                 ctx.fillStyle = canvas.style.backgroundColor;
-                ctx.fillRect(0 - Math.abs(playerPosX), 0 - Math.abs(playerPosY), 480 + Math.abs(playerPosX), 800 + Math.abs(playerPosY));
+                ctx.fillRect(0 - Math.abs(playerPosX), 0 - Math.abs(playerPosY), 960 + Math.abs(playerPosX), 1600 + Math.abs(playerPosY));
                 rang += 0.03;
-                if(rightPressed)
-                    {
-                        playerPosX++;
-                    }
-                if(leftPressed)
-                    {
-                        playerPosX--;
-                    }
-                if(upPressed)
-                    {
-                        playerPosY--;
-                    }
-                if(downPressed)
-                    {
-                        playerPosY++;
-                    }
-                    drawStar(rang);
+                drawStar(rang);
                 ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
                 ctx.fillText('HP:'+playerHP, 240, 470);
                 element.draw();
                 var currentTime = new Date();
                 if(currentTime.getTime() - prevTime.getTime() > 1000)
-                {
+                    {
                     for(var i = 0; i < Math.random() * 14 + 1; i++)
                     {
                         enemyPool.push(new EnemyObject(-(Math.random() * WIDTH + 200) - 20 + playerPosX, Math.random() * HEIGHT * 2 - HEIGHT + playerPosY, 10, 'black')); // 
@@ -486,13 +684,16 @@ function buttondraw()
                         enemyPool.push(new EnemyObject((Math.random() * WIDTH * 2) - WIDTH + playerPosX, (Math.random() * 200) +HEIGHT + 20 + playerPosY, 10, 'black')); 
                     }
                     prevTime = new Date();
-                }
+                    }
+
                 count = 0;
                 enemyDeletePool = [];
+
                 enemyPool.forEach((element) =>{
                     element.update();
                     element.render();
-                });
+                    });
+
                 enemyPool.forEach((element) =>{
                     count++;
                     if(element.findtouch() == true)
@@ -501,26 +702,25 @@ function buttondraw()
                             playerHP--;
                         }
                 });
+
                 enemyDeletePool.forEach((element) =>{
                     enemyPool.splice(element-1, 1);
                     
                 })
+
                 if(playerHP <= 0)
                 {
-                    clearInterval();
                     ctx.translate(WIDTH, HEIGHT);
                     overScreen();
-                    buttondraw();
+                    gameOverBtn();
                     ctx.translate(-WIDTH, -HEIGHT);
                 }
+
             }, 10);
-            
-            
-            
+
             a = 1;
 
-            
-        },1000);
+            },1000);
         }
     }
 
