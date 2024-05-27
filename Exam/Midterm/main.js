@@ -344,11 +344,11 @@ function mainScreen()
     ctx.font = '30px Arial';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'left';
-    ctx.fillText('중간고사라고 했지만 ', -180, -200);
-    ctx.fillText('실제로는 게임을 만들', -180, -170);
-    ctx.fillText('라고 하는 교수를 엿먹', -180, -140);
-    ctx.fillText('이기 위해 겁나 잘 만들', -180, -110);
-    ctx.fillText('고 있는 게임', -180, -80);
+    ctx.fillText('중간고사', -180, -200);
+    ctx.fillText('게임게임게임게임', -180, -170);
+    ctx.fillText('게임게임게임게임', -180, -140);
+    ctx.fillText('게임게임게임게임', -180, -110);
+    ctx.fillText('게임게임게임게임', -180, -80);
     
     ctx.closePath();
 }
@@ -365,9 +365,11 @@ function overScreen()
     ctx.font = '30px Arial';
     ctx.fillStyle = 'white';
     ctx.textAlign = 'left';
-    ctx.fillText('그는 시험을 보다가 실', -180, -200);
-    ctx.fillText('수로 플레이어를 죽였', -180, -170);
-    ctx.fillText('다. 잔인한 사람...', -180, -140);
+    ctx.fillText('게임오버게임오버', -180, -200);
+    ctx.fillText('게임오버게임오버', -180, -170);
+    ctx.fillText('게임오버게임오버', -180, -140);
+    ctx.fillText('게임오버게임오버', -180, -110);
+    ctx.fillText('게임오버게임오버', -180, -80);
     
     ctx.closePath();
 }
