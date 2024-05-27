@@ -498,17 +498,16 @@ function gameOverBtn()
     
                     enemyPool.forEach((element) =>{
                         count++;
-                        if(element.findtouch() == true)
+                        if(element.findtouch())
                             {
                                 enemyDeletePool.push(count);
-                                playerHP--;
                             }
-                    });
-    
-                    enemyDeletePool.forEach((element) =>{
-                        enemyPool.splice(element-1, 1);
+                        });
                         
-                    })
+                        enemyDeletePool.forEach((element) =>{
+                            enemyPool.splice(element-1, 1);
+                            playerHP--;
+                        })
     
                     if(playerHP <= 0)
                     {
